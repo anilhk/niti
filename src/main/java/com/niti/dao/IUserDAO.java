@@ -16,4 +16,6 @@ public interface IUserDAO {
 	
 	public List<UserEntity> getAllUsers() throws DaoException;
 	
+	public boolean findUserByEmailAddress(String emailAddress) throws DaoException;
+	
 }

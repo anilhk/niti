@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 import com.niti.dao.DaoException;
@@ -42,6 +44,14 @@ public class UserDAOImpl implements IUserDAO {
 	@Override
 	public List<UserEntity> getAllUsers() throws DaoException {
 		return (List<UserEntity>)entityManager.createQuery("select e from UserEntity e").getResultList();
+		
+	}
+
+	@Override
+	public boolean findUserByEmailAddress(String emailAddress) throws DaoException {
+		Query query = entityManager.createQuery("select e from UserEntity e where e.emailAddress = :emailAddress");
+		query.setParameter("emailAddress", emailAddress);
+		return (query.getResultList() != null || query.getResultList().size() > 0);
 		
 	}
 

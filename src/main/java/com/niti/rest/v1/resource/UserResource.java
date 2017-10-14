@@ -20,6 +20,7 @@ import com.niti.bo.UserBO;
 import com.niti.service.IUserService;
 import com.niti.service.exception.ServiceBusinessException;
 
+
 @Path("/users")
 @Component
 @Produces(MediaType.APPLICATION_JSON)
@@ -47,6 +48,9 @@ public class UserResource {
 	
 	@POST
 	public void addUser(UserBO user) throws ServiceBusinessException {
+		System.out.println("User bo isactive" +user.isActive());
+		System.out.println("User bo isactive" +user.isAdmin());
+		
 		userServiceImpl.addUser(user);;
 		
 	}

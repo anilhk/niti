@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserBO {
 
@@ -58,8 +59,10 @@ public class UserBO {
 
 	private Calendar lastUpdatedDate;
 	
+	@JsonProperty
 	private boolean isActive;
 	
+	@JsonProperty
 	private boolean isAdmin;
 	
 	private String password;
