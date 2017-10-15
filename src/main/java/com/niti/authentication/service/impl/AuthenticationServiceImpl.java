@@ -19,7 +19,7 @@ import com.niti.service.exception.ServiceException;
 import com.niti.utils.PasswordUtils;
 
 @Transactional
-@Component
+@Component("authenticationService")
 public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
@@ -80,25 +80,30 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public void validateUser(UserBO userBO) throws ServiceBusinessException {
 
 		if (userBO == null) {
+			logger.error("cannot add user, user is null" , userBO);
 			throw new ServiceBusinessException("Cannot add a null object", ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
 		}
 		 if (userBO.getEmailAddress() == null || userBO.getEmailAddress().isEmpty()) {
+			 logger.error("cannot add user, user email address cannot be null or empty ", userBO.getEmailAddress());
 			 //TODO :: throw email address cannot be null.
 			 throw new ServiceBusinessException("Cannot add a null object", ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
 		 }
 		 
 		 if (userExists(userBO.getEmailAddress())) {
-			//TODO :: throw user already exists exception
+			 logger.error("cannot add user, user email address already exists ", userBO.getEmailAddress());
+			 //TODO :: throw user already exists exception
 			 throw new ServiceBusinessException("Cannot add a null object", ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
 		 }
 		 
 		 if (userBO.getPassword() == null || userBO.getPassword().isEmpty() || userBO.getConfirmPassword() == null ||
 				 userBO.getConfirmPassword().isEmpty()) {
+			 logger.error("cannot add user, either user password or confirm password is null or empty " +userBO.getPassword() + " Confirm password = " +userBO.getConfirmPassword());
 			//TODO :: throw error password and confirm password field cannot be empty. // in case javascript validation disabled . validate server side.
 			 throw new ServiceBusinessException("Cannot add a null object", ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
 		 }
 		 
 		 if (!userBO.getPassword().equals(userBO.getConfirmPassword())) {
+			 logger.error("cannot add user, user password and confirm password do not match. Password " +userBO.getPassword() + " Confirm password = " +userBO.getConfirmPassword());
 			//TODO :: throw error password and confirm password should be same . // in case javascript validation disabled . validate server side.
 			 throw new ServiceBusinessException("Cannot add a null object", ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
 		 }
