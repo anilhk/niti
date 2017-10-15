@@ -18,4 +18,8 @@ public interface IUserDAO {
 	
 	public boolean findUserByEmailAddress(String emailAddress) throws DaoException;
 	
+	public UserEntity findUserByEmailAddressAndPassword(String emailAddress,String password) throws DaoException;
+	
+	public UserEntity getUserByEmailAddress(String emailAddress) throws DaoException;
+	
 }

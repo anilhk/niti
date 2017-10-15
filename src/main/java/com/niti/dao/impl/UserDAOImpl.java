@@ -51,10 +51,28 @@ public class UserDAOImpl implements IUserDAO {
 	public boolean findUserByEmailAddress(String emailAddress) throws DaoException {
 		Query query = entityManager.createQuery("select e from UserEntity e where e.emailAddress = :emailAddress");
 		query.setParameter("emailAddress", emailAddress);
-		System.out.println("result set :::#############" +query.getResultList().size());
-		
 		return (query.getResultList() != null && !query.getResultList().isEmpty() && query.getResultList().size() > 0);
 		
+	}
+
+	@Override
+	public UserEntity findUserByEmailAddressAndPassword(String emailAddress, String password) throws DaoException {
+		Query query = entityManager.createQuery("select e from UserEntity e where e.emailAddress = :emailAddress and e.password = :password");
+		query.setParameter("emailAddress", emailAddress);
+		query.setParameter("password", password);
+		return null;
+	}
+
+	@Override
+	public UserEntity getUserByEmailAddress(String emailAddress) throws DaoException {
+		Query query = entityManager.createQuery("select e from UserEntity e where e.emailAddress = :emailAddress");
+		query.setParameter("emailAddress", emailAddress);
+		
+		if (query.getResultList() == null || query.getResultList().isEmpty() || query.getResultList().size() == 0) {
+			return null;
+		}else {
+			return (UserEntity)query.getResultList().get(0);
+		}
 	}
 
 	

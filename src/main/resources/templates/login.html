@@ -70,10 +70,10 @@
 			
 	<div class="container">
 			<div class="starter-template">
-				<h2>Create User</h2>
+				<h2>Login</h2>
 			</div>
 
-			<form th:object="${user}" th:method="post" th:action="saveUser"  class="form-horizontal">
+			<form th:object="${user}" th:method="post" th:action="validateUser"  class="form-horizontal">
 				<table class="table table-striped">
 					
 					<tr>
@@ -99,6 +99,15 @@
 							<div class="controls">
 								<input type="password" class="form-control" th:field="*{password}" /> 
 								<label class="control-label"></label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<div class="form-actions pull-right">
+								<input type="submit" name="_eventId_validateUser" value="Login" class="btn btn-success" tabindex="5" />
+								<input type="submit" name="_eventId_cancel" value="Cancel" class="btn btn-danger " tabindex="6" />
 							</div>
 						</td>
 					</tr>
