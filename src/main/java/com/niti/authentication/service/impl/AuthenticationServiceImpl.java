@@ -1,5 +1,8 @@
 package com.niti.authentication.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
@@ -52,29 +55,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	@Override
 	public UserBO authenticateUser(String emailAddress, String password) throws ServiceBusinessException {
-		
+
 		UserBO userBO;
 		UserEntity userEntity;
 		try {
-				
-				userEntity   =  userDAOImpl.getUserByEmailAddress(emailAddress);
-				if (userEntity == null) {
-					//TODO :: write error code even though the user is not found, still throw invalid user id and password for security.
-					throw new ServiceBusinessException("Invalid user id and password",
-							ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
-				}
-			
-			userBO = convertToBO(userEntity);	
+
+			userEntity = userDAOImpl.getUserByEmailAddress(emailAddress);
+			if (userEntity == null) {
+				// TODO :: write error code even though the user is not found, still throw
+				// invalid user id and password for security.
+				throw new ServiceBusinessException("Invalid user id and password",
+						ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+			}
+
+			userBO = convertToBO(userEntity);
 			if (!PasswordUtils.checkPassword(password, userBO.getPassword())) {
-				
+
 				logger.error("Cannot login user, Invalid user id or password ");
 				// TODO :: throw error invalid user id or password.
 				throw new ServiceBusinessException("Cannot add a null object",
 						ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
 			}
-					
-		}		
-			catch (DaoException e) {
+
+		} catch (DaoException e) {
 			logger.error("Database exception ", e);
 			throw new ServiceBusinessException("Technical Error", ServiceException.ErrorCode.TECHNICAL_ERROR);
 		}
@@ -104,6 +107,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	public void validateUser(UserBO userBO) throws ServiceBusinessException {
 
+	try {	
+		
 		if (userBO == null) {
 			logger.error("cannot add user, user is null", userBO);
 			throw new ServiceBusinessException("Cannot add a null object",
@@ -141,7 +146,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			throw new ServiceBusinessException("Cannot add a null object",
 					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
 		}
-
+		
+		if (!PasswordConstraintValidator.validatePassword(userBO.getPassword())) {
+			logger.error("cannot add user, user password and confirm password do not match. Password "
+					+ userBO.getPassword() + " Confirm password = " + userBO.getConfirmPassword());
+			// TODO :: throw error password and confirm password should be same . // in case
+			// javascript validation disabled . validate server side.
+			throw new ServiceBusinessException("Cannot add a null object",
+					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+		}
+		
+		
+		PasswordConstraintValidator.validatePassword(userBO.getPassword());
+			
+		
+	}catch(PasswordValidatorException e) {
+		
+		 String developerMessage = createMessagefromException(e.getMessage());
+		 System.out.println("exception message $$$$$$$$$$$$$$$ " +e.getMessage());
+		 throw new ServiceBusinessException(developerMessage,
+					ServiceException.ErrorCode.PASSWORD_REQUIREMENTS_NOT_MET);
+		
+	}
+	
 	}
 
 	@Override
@@ -160,4 +187,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return entityToBOMapper.map(userEntity, UserBO.class);
 	}
 
+	
+	private String createMessagefromException(String message) {
+		
+		StringBuilder developerMessage = new StringBuilder("The password has the following issues : ");
+		 String[] words = message.split(":|\\}");
+		    List<String> result = new ArrayList<String>();
+
+		    for(String word : words) {
+		        String wordToUpperCase = word.toUpperCase();
+		        if(wordToUpperCase.equals(word)) {
+		            result.add(word);
+		        }
+		    }
+		    
+		    for (String str : result) {
+		    	developerMessage.append(str).append(",");
+		    }
+		    
+			return developerMessage.toString();
+		
+	}
 }
