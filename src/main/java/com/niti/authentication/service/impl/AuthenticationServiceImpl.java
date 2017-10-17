@@ -59,19 +59,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 			userEntity = userDAOImpl.getUserByEmailAddress(emailAddress);
 			if (userEntity == null) {
-				// TODO :: write error code even though the user is not found, still throw
-				// invalid user id and password for security.
-				throw new ServiceBusinessException("Invalid user id and password",
-						ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+				logger.error("Cannot login user, Invalid user id or password ");
+				throw new ServiceBusinessException("invalid user id or password",
+						ServiceException.ErrorCode.INVALID_USER_ID_OR_PASSWORD);
 			}
 
 			userBO = convertToBO(userEntity);
 			if (!PasswordUtils.checkPassword(password, userBO.getPassword())) {
 
 				logger.error("Cannot login user, Invalid user id or password ");
-				// TODO :: throw error invalid user id or password.
-				throw new ServiceBusinessException("Cannot add a null object",
-						ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+				throw new ServiceBusinessException("invalid user id or password",
+						ServiceException.ErrorCode.INVALID_USER_ID_OR_PASSWORD);
 			}
 
 		} catch (DaoException e) {
