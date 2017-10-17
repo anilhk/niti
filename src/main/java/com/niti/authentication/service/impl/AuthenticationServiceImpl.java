@@ -1,8 +1,5 @@
 package com.niti.authentication.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
@@ -88,7 +85,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public void createUser(UserBO userBO) throws ServiceBusinessException {
 		try {
 
-			validateUser(userBO);
+			validateUserCredentials(userBO);
 			addSaltAndHash(userBO);
 			userDAOImpl.addUser(convertToEntity(userBO));
 
@@ -105,10 +102,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		userBO.setConfirmPassword(userBO.getPassword());
 	}
 
-	public void validateUser(UserBO userBO) throws ServiceBusinessException {
+	public void validateUserCredentials(UserBO userBO) throws ServiceBusinessException {
 
-	try {	
-		
 		if (userBO == null) {
 			logger.error("cannot add user, user is null", userBO);
 			throw new ServiceBusinessException("Cannot add a null object",
@@ -116,58 +111,32 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		}
 		if (userBO.getEmailAddress() == null || userBO.getEmailAddress().isEmpty()) {
 			logger.error("cannot add user, user email address cannot be null or empty ", userBO.getEmailAddress());
-			// TODO :: throw email address cannot be null.
-			throw new ServiceBusinessException("Cannot add a null object",
-					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+			throw new ServiceBusinessException("Email Address cannot be Null",
+					ServiceException.ErrorCode.NULL_EMAIL_ADDRESS);
 		}
 
 		if (userExists(userBO.getEmailAddress())) {
 			logger.error("cannot add user, user email address already exists ", userBO.getEmailAddress());
-			// TODO :: throw user already exists exception
-			throw new ServiceBusinessException("Cannot add a null object",
-					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+			throw new ServiceBusinessException("cannot add user, user email address already exists "+  userBO.getEmailAddress(),
+					ServiceException.ErrorCode.USER_ALREADY_EXISTS);
 		}
 
 		if (userBO.getPassword() == null || userBO.getPassword().isEmpty() || userBO.getConfirmPassword() == null
 				|| userBO.getConfirmPassword().isEmpty()) {
 			logger.error("cannot add user, either user password or confirm password is null or empty "
 					+ userBO.getPassword() + " Confirm password = " + userBO.getConfirmPassword());
-			// TODO :: throw error password and confirm password field cannot be empty. //
-			// in case javascript validation disabled . validate server side.
-			throw new ServiceBusinessException("Cannot add a null object",
-					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+			throw new ServiceBusinessException("cannot add user, either user password or confirm password is null or empty",
+					ServiceException.ErrorCode.BLANK_PASSWORD);
 		}
 
 		if (!userBO.getPassword().equals(userBO.getConfirmPassword())) {
 			logger.error("cannot add user, user password and confirm password do not match. Password "
 					+ userBO.getPassword() + " Confirm password = " + userBO.getConfirmPassword());
-			// TODO :: throw error password and confirm password should be same . // in case
-			// javascript validation disabled . validate server side.
-			throw new ServiceBusinessException("Cannot add a null object",
-					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
+			throw new ServiceBusinessException("cannot add user, user password and confirm password do not match",
+					ServiceException.ErrorCode.PASSWORD_CONFIRM_PASSWORD_NOT_MATCH);
 		}
-		
-		if (!PasswordConstraintValidator.validatePassword(userBO.getPassword())) {
-			logger.error("cannot add user, user password and confirm password do not match. Password "
-					+ userBO.getPassword() + " Confirm password = " + userBO.getConfirmPassword());
-			// TODO :: throw error password and confirm password should be same . // in case
-			// javascript validation disabled . validate server side.
-			throw new ServiceBusinessException("Cannot add a null object",
-					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
-		}
-		
 		
 		PasswordConstraintValidator.validatePassword(userBO.getPassword());
-			
-		
-	}catch(PasswordValidatorException e) {
-		
-		 String developerMessage = createMessagefromException(e.getMessage());
-		 System.out.println("exception message $$$$$$$$$$$$$$$ " +e.getMessage());
-		 throw new ServiceBusinessException(developerMessage,
-					ServiceException.ErrorCode.PASSWORD_REQUIREMENTS_NOT_MET);
-		
-	}
 	
 	}
 
@@ -188,24 +157,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	
-	private String createMessagefromException(String message) {
-		
-		StringBuilder developerMessage = new StringBuilder("The password has the following issues : ");
-		 String[] words = message.split(":|\\}");
-		    List<String> result = new ArrayList<String>();
-
-		    for(String word : words) {
-		        String wordToUpperCase = word.toUpperCase();
-		        if(wordToUpperCase.equals(word)) {
-		            result.add(word);
-		        }
-		    }
-		    
-		    for (String str : result) {
-		    	developerMessage.append(str).append(",");
-		    }
-		    
-			return developerMessage.toString();
-		
-	}
+	
 }

@@ -18,8 +18,16 @@ public class ApplicationExceptionMapper implements ExceptionMapper<ServiceBusine
 			.put(ServiceException.ErrorCode.TECHNICAL_ERROR, createExceptionMapping(500, 1))
 			.put(ServiceException.ErrorCode.DATA_ALREADY_EXISTS, createExceptionMapping(400, 2))
 			.put(ServiceException.ErrorCode.DATA_NOT_FOUND_EXCEPTION, createExceptionMapping(402, 3))
-			.put(ServiceException.ErrorCode.NULL_OBJECT_REFERENCE, createExceptionMapping(400, 4)).build();
+			.put(ServiceException.ErrorCode.NULL_OBJECT_REFERENCE, createExceptionMapping(400, 4))
+			.put(ServiceException.ErrorCode.NULL_EMAIL_ADDRESS, createExceptionMapping(400, 5))
+			.put(ServiceException.ErrorCode.USER_ALREADY_EXISTS, createExceptionMapping(400, 6))
+			.put(ServiceException.ErrorCode.BLANK_PASSWORD, createExceptionMapping(400, 7))
+			.put(ServiceException.ErrorCode.PASSWORD_CONFIRM_PASSWORD_NOT_MATCH, createExceptionMapping(400, 8))
+			.put(ServiceException.ErrorCode.PASSWORD_VALIDATION_FAILED, createExceptionMapping(400, 9))
 
+			.build();
+	
+	
 	@Override
 	public Response toResponse(ServiceBusinessException ex) {
 
