@@ -1,66 +1,85 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:ddl="http://www.thymeleaf.org/dandelion"
-	  xmlns:dt="http://github.com/dandelion/datatables"
-	  ddl:bundle-includes="bootstrap3"
-	  lang="en">
+	xmlns:ddl="http://www.thymeleaf.org/dandelion"
+	xmlns:dt="http://github.com/dandelion/datatables"
+	ddl:bundle-includes="bootstrap3" lang="en">
 
 <head th:replace="fragments/header :: header"></head>
 
 
 <body>
 
-<div th:include="fragments/navBar :: navBar"></div>
-			
-			
-	<div class="container">
-			<div class="starter-template">
-				<h2>Login</h2>
-			</div>
+	<div th:include="fragments/navBar :: navBar"></div>
 
-			<form th:object="${user}" th:method="post" th:action="validateUser"  class="form-horizontal">
-				<table class="table table-striped">
-					
-					<tr>
-						<td>
-							<div class="control-group">
-								<label class="control-label">Email</label>
-							</div>
-						</td>
-						<td>
-							<div class="controls">
-								<input type="text" class="form-control" th:field="*{emailAddress}" />
-								<label class="control-label"></label>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="control-group">
-								<label class="control-label">Password</label>
-							</div>
-						</td>
-						<td>
-							<div class="controls">
-								<input type="password" class="form-control" th:field="*{password}" /> 
-								<label class="control-label"></label>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td>
-							<div class="form-actions pull-right">
-								<input type="submit" name="_eventId_validateUser" value="Login" class="btn btn-success" tabindex="5" />
-								<input type="submit" name="_eventId_cancel" value="Cancel" class="btn btn-danger " tabindex="6" />
-							</div>
-						</td>
-					</tr>
-				</table>
-			</form>
+
+	<div class="container">
+		<div class="starter-template">
+			<h2>Login</h2>
 		</div>
-			
 	
+		
+
+		<form th:object="${user}" th:method="post" th:action="validateUser"
+			class="form-horizontal">
+		
+		 <ul th:if="${#fields.hasErrors('global')}" class="errorlist">
+            <li th:each="err : ${#fields.errors('global')}" th:text="${err}"></li>
+          </ul>
+		
+		<!-- <div th:if="${#fields.hasErrors('global')}" th:errors="*{global}">
+        	Incorrect date
+    	</div> -->
+			
+		
+			<table class="table table-striped">
+
+			<tr
+				th:classappend="${#fields.hasErrors('emailAddress')} ? 'has-error'">
+					<td class="col-sm-1">
+						<div class="control-group" th:classappend="${#fields.hasErrors('emailAddress')} ? 'error'">
+							<label class="control-label">Email</label>
+						</div>
+					</td>
+					<td class="col-sm-2">
+						<div class="controls">
+							<input type="text" class="form-control"
+								th:field="*{emailAddress}" /> <label class="control-label"
+								th:errors="*{emailAddress}">[error]></label>
+						</div>
+					</td>
+				</tr>
+
+				<tr
+				th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+					<td class="col-sm-1">
+						<div class="control-group" th:classappend="${#fields.hasErrors('password')} ? 'error'">
+							<label class="control-label">Password</label>
+						</div>
+					</td>
+					<td class="col-sm-2">
+						<div class="controls">
+							<input type="password" class="form-control"
+								th:field="*{password}" /> <label class="control-label"
+								th:errors="*{password}">[error]></label>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td></td>
+					<td>
+						<div class="form-actions text-center">
+							<input type="submit" name="_eventId_validateUser" value="Login" class="btn btn-success" tabindex="5" /> 
+							<input type="reset" name="_eventId_cancel" value="Cancel" class="btn btn-danger "
+								tabindex="6" />
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+
 </body>
 
 

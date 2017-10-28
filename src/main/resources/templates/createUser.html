@@ -15,48 +15,50 @@
 			
 	<div class="container">
 			<div class="starter-template">
-				<h2>Create User</h2>
+				<h2>Register</h2>
 			</div>
 
 			<form th:object="${user}" th:method="post" th:action="saveUser"  class="form-horizontal">
 				<table class="table table-striped">
-					
-					<tr>
-						<td>
-							<div class="control-group">
+					<tr th:classappend="${#fields.hasErrors('emailAddress')} ? 'has-error'">
+					<td class="col-sm-1">
+							<div class="control-group"  th:classappend="${#fields.hasErrors('emailAddress')} ? 'error'">
 								<label class="control-label">Email</label>
 							</div>
-						</td>
-						<td>
+					</td>
+						<td class="col-sm-2">
 							<div class="controls">
 								<input type="text" class="form-control" th:field="*{emailAddress}" />
-								<label class="control-label"></label>
+								<label class="control-label" th:errors="*{emailAddress}">[error]></label>
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<div class="control-group">
+					
+					<tr th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+					<td class="col-sm-1">
+							<div class="control-group" th:classappend="${#fields.hasErrors('password')} ? 'error'">
 								<label class="control-label">Password</label>
 							</div>
 						</td>
-						<td>
-							<div class="controls">
-								<input type="password" class="form-control" th:field="*{password}" /> 
-								<label class="control-label"></label>
+					<td class="col-sm-2">
+						<div class="controls">
+							<input type="password" class="form-control" th:field="*{password}" /> 
+								<label class="control-label"  th:errors="*{password}">[error]></label>
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<td>
-							<div class="control-group">
+					
+					
+					<tr th:classappend="${#fields.hasErrors('confirmPassword')} ? 'has-error'">
+					<td class="col-sm-1">
+							<div class="control-group"  th:classappend="${#fields.hasErrors('confirmPassword')} ? 'error'">
 								<label class="control-label">Confirm Password</label>
 							</div>
 						</td>
 						<td>
 							<div class="controls">
 								<input type="password" class="form-control" th:field="*{confirmPassword}" />
-								<label class="control-label"></label>
+								<label class="control-label" th:errors="*{confirmPassword}">[error]></label>
 							</div>
 						</td>
 					</tr>

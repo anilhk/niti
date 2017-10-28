@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 
 import com.niti.authentication.service.AuthenticationService;
 import com.niti.bo.UserBO;
@@ -51,39 +52,38 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public UserBO authenticateUser(String emailAddress, String password) throws ServiceBusinessException {
+	public UserBO authenticateUser(UserBO userBO, BindingResult result) throws ServiceBusinessException {
 
-		UserBO userBO;
+		
 		UserEntity userEntity;
+		UserBO user;
 		try {
 
-			userEntity = userDAOImpl.getUserByEmailAddress(emailAddress);
+			userEntity = userDAOImpl.getUserByEmailAddress(userBO.getEmailAddress());
 			if (userEntity == null) {
 				logger.error("Cannot login user, Invalid user id or password ");
-				throw new ServiceBusinessException("invalid user id or password",
-						ServiceException.ErrorCode.INVALID_USER_ID_OR_PASSWORD);
+				result.reject("global","Invalid user id or Password");
 			}
 
-			userBO = convertToBO(userEntity);
-			if (!PasswordUtils.checkPassword(password, userBO.getPassword())) {
+			user = convertToBO(userEntity);
+			if (!PasswordUtils.checkPassword(userBO.getPassword(), user.getPassword())) {
 
 				logger.error("Cannot login user, Invalid user id or password ");
-				throw new ServiceBusinessException("invalid user id or password",
-						ServiceException.ErrorCode.INVALID_USER_ID_OR_PASSWORD);
+				result.reject("global", "Invalid user id or passwords");
+
 			}
 
 		} catch (DaoException e) {
 			logger.error("Database exception ", e);
 			throw new ServiceBusinessException("Technical Error", ServiceException.ErrorCode.TECHNICAL_ERROR);
 		}
-		return userBO;
+		return user;
 	}
 
 	@Override
 	public void createUser(UserBO userBO) throws ServiceBusinessException {
 		try {
 
-			validateUserCredentials(userBO);
 			addSaltAndHash(userBO);
 			userDAOImpl.addUser(convertToEntity(userBO));
 
@@ -100,44 +100,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		userBO.setConfirmPassword(userBO.getPassword());
 	}
 
-	public void validateUserCredentials(UserBO userBO) throws ServiceBusinessException {
-
-		if (userBO == null) {
-			logger.error("cannot add user, user is null", userBO);
-			throw new ServiceBusinessException("Cannot add a null object",
-					ServiceException.ErrorCode.NULL_OBJECT_REFERENCE);
-		}
-		if (userBO.getEmailAddress() == null || userBO.getEmailAddress().isEmpty()) {
-			logger.error("cannot add user, user email address cannot be null or empty ", userBO.getEmailAddress());
-			throw new ServiceBusinessException("Email Address cannot be Null",
-					ServiceException.ErrorCode.NULL_EMAIL_ADDRESS);
-		}
-
-		if (userExists(userBO.getEmailAddress())) {
-			logger.error("cannot add user, user email address already exists ", userBO.getEmailAddress());
-			throw new ServiceBusinessException("cannot add user, user email address already exists "+  userBO.getEmailAddress(),
-					ServiceException.ErrorCode.USER_ALREADY_EXISTS);
-		}
-
-		if (userBO.getPassword() == null || userBO.getPassword().isEmpty() || userBO.getConfirmPassword() == null
-				|| userBO.getConfirmPassword().isEmpty()) {
-			logger.error("cannot add user, either user password or confirm password is null or empty "
-					+ userBO.getPassword() + " Confirm password = " + userBO.getConfirmPassword());
-			throw new ServiceBusinessException("cannot add user, either user password or confirm password is null or empty",
-					ServiceException.ErrorCode.BLANK_PASSWORD);
-		}
-
-		if (!userBO.getPassword().equals(userBO.getConfirmPassword())) {
-			logger.error("cannot add user, user password and confirm password do not match. Password "
-					+ userBO.getPassword() + " Confirm password = " + userBO.getConfirmPassword());
-			throw new ServiceBusinessException("cannot add user, user password and confirm password do not match",
-					ServiceException.ErrorCode.PASSWORD_CONFIRM_PASSWORD_NOT_MATCH);
-		}
-		
-		PasswordConstraintValidator.validatePassword(userBO.getPassword());
 	
-	}
-
 	@Override
 	public void resetPassword(String emailAddress, String password, String confirmPassword)
 			throws ServiceBusinessException {
