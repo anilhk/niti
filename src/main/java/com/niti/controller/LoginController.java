@@ -32,18 +32,14 @@ public class LoginController {
 	@RequestMapping(value="/validateUser" , method=RequestMethod.POST)
 	public String processLoginInfo(@ModelAttribute("user") @Validated UserBO user, BindingResult result, Model model) throws ServiceBusinessException {
 		
-	try {	
-			UserBO userBO = authenticationService.authenticateUser(user,result);
-			
+		UserBO userBO = authenticationService.authenticateUser(user,result);
+		model.addAttribute("user",userBO);	
 			if (result.hasErrors()) {
 				return "login";
 			}
 			
-			return "userDetails";
-	}catch(ServiceBusinessException e) {
-		System.out.println(e.getCause());
-	}
-	return "userDetails";
+			return "dashboard";
+	
 }	
 	
 }
