@@ -133,11 +133,11 @@ public class UserExperienceServiceImpl implements IUserExperienceService {
 		List<UserExperienceBO> userExperienceBOs = new ArrayList<UserExperienceBO>();
 		try {
 				experienceEntities = userExperienceDAOImpl.getAllUserExperiencesByUserId(userId);
-				System.out.println("experiences = " +experienceEntities);
-				System.out.println("experiences size " +experienceEntities.size());
 				experienceEntities.forEach(entity -> entity.toString());
 				 if (experienceEntities == null || experienceEntities.size() ==0 ) {
-					 throw new ServiceBusinessException("No User Experiences Found for the User id " + userId +" in the system", ServiceException.ErrorCode.DATA_NOT_FOUND_EXCEPTION);
+					// throw new ServiceBusinessException("No User Experiences Found for the User id " + userId +" in the system", ServiceException.ErrorCode.DATA_NOT_FOUND_EXCEPTION);
+					 logger.info("No User Experiences Found for the User id " + userId +" in the system");;
+					 return userExperienceBOs;
 				 }
 		
 			experienceEntities.stream().forEach(experienceEntity -> userExperienceBOs.add(convertToBO(experienceEntity)));

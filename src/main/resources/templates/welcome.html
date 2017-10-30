@@ -23,7 +23,12 @@
 				<tr>
 					<td class="col-sm-5" style="text-align: right">
 						<h3>Returning users:</h3>
-						<a th:href="@{'/login'}" href="login.html" class="btn btn-success">Click here</a>
+						<form action="#" th:action="@{/login}" method="get">
+							<div>
+								<button type="submit" class="btn btn-info">Click here</button>
+							</div>
+						
+						</form>
 					</td>
 					<td class="col-sm-2">&nbsp;</td>
 					<td class="col-sm-5" style="text-align: left">
