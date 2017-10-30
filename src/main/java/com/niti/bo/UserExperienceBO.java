@@ -35,6 +35,8 @@ public class UserExperienceBO {
 	
 	private String reportingManager;
 	
+	private String projectName;
+	
 	@JsonManagedReference
 	@JsonIgnore
 	private UserBO user;
@@ -146,6 +148,14 @@ public class UserExperienceBO {
 	 */
 	public void setReportingManager(String reportingManager) {
 		this.reportingManager = reportingManager;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	/**

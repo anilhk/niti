@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.niti.authentication.service.impl.UserExperienceValidator;
+import com.niti.bo.UserBO;
 import com.niti.bo.UserExperienceBO;
 import com.niti.service.IUserExperienceService;
+import com.niti.service.IUserService;
 import com.niti.service.exception.ServiceBusinessException;
 
 @Controller
@@ -28,13 +30,21 @@ public class UserExperienceController {
 	@Autowired
 	private IUserExperienceService userExperienceServiceImpl;
 	
-	@InitBinder
+	@Autowired
+	private IUserService userServiceImpl;
+	
+	@InitBinder("userExperienceBO")
 	public void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.addValidators(userExperienceValidator);
 	}
 	@RequestMapping(value = "/user/{userId}/experiences", method = RequestMethod.GET)
-	public List<UserExperienceBO> getUserExperiences(@PathVariable("userId") Integer userId) throws ServiceBusinessException {
-			return userExperienceServiceImpl.getAllUserExperiencesByUserId(userId);
+	public String getUserExperiences(@PathVariable("userId") Integer userId, Model model) throws ServiceBusinessException {
+			
+					List<UserExperienceBO> userExperienceBOs = userExperienceServiceImpl.getAllUserExperiencesByUserId(userId);
+					UserBO userBO = userServiceImpl.findUserByUserId(userId);
+					model.addAttribute("userExperienceBOs", userExperienceBOs);
+					model.addAttribute("user", userBO);
+					return "experience";
 	}
 
 	@RequestMapping(value = "/user/{userId}/experience/{experienceId}", method = RequestMethod.GET)
@@ -54,7 +64,6 @@ public class UserExperienceController {
 
 	@RequestMapping(value = "/user/{userId}/experience/{experienceId}", method = RequestMethod.DELETE)
 	public void updateUserExperience(@PathVariable("experienceId") Integer experienceId, Model model) throws ServiceBusinessException {
-
 		userExperienceServiceImpl.deleteUserExperience(experienceId);
 	}
 

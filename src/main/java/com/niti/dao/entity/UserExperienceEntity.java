@@ -53,6 +53,9 @@ public class UserExperienceEntity implements Serializable{
 	@Column(name="NO_OF_YEARS")
 	private Integer noOfYears;
 	
+	@Column(name="PROJECT_NAME")
+	private String projectName;
+	
 	@Column(name="CLIENT_END_DATE")
 	private Calendar clientStartDate;
 	
@@ -158,6 +161,20 @@ public class UserExperienceEntity implements Serializable{
 	 */
 	public void setNoOfYears(Integer noOfYears) {
 		this.noOfYears = noOfYears;
+	}
+
+	/**
+	 * @return the projectName
+	 */
+	public String getProjectName() {
+		return projectName;
+	}
+
+	/**
+	 * @param projectName the projectName to set
+	 */
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	/**
