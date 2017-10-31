@@ -318,6 +318,20 @@ public class UserEntity implements Serializable {
 		this.userExperiences = userExperiences;
 	}
 
+	/**
+	 * @return the userImmigrations
+	 */
+	public List<UserImmigrationEntity> getUserImmigrations() {
+		return userImmigrations;
+	}
+
+	/**
+	 * @param userImmigrations the userImmigrations to set
+	 */
+	public void setUserImmigrations(List<UserImmigrationEntity> userImmigrations) {
+		this.userImmigrations = userImmigrations;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

@@ -103,6 +103,20 @@ public class UserImmigrationEntity implements Serializable {
 	}
 
 	/**
+	 * @return the user
+	 */
+	public UserEntity getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+
+	/**
 	 * @return the passportNumber
 	 */
 	public String getPassportNumber() {

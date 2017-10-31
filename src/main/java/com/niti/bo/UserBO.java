@@ -49,6 +49,9 @@ public class UserBO {
 	@JsonBackReference
 	private List<UserExperienceBO> userExperiences;
 	
+	@JsonBackReference
+	private List<UserImmigrationBO> userImmigrations;
+	
 	private String userNumber;
 
 	private String createdBy;
@@ -264,6 +267,20 @@ public class UserBO {
 	 */
 	public void setUserExperiences(List<UserExperienceBO> userExperiences) {
 		this.userExperiences = userExperiences;
+	}
+
+	/**
+	 * @return the userImmigrations
+	 */
+	public List<UserImmigrationBO> getUserImmigrations() {
+		return userImmigrations;
+	}
+
+	/**
+	 * @param userImmigrations the userImmigrations to set
+	 */
+	public void setUserImmigrations(List<UserImmigrationBO> userImmigrations) {
+		this.userImmigrations = userImmigrations;
 	}
 
 	/**

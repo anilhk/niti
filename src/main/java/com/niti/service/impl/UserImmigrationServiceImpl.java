@@ -12,11 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.niti.bo.UserExperienceBO;
 import com.niti.bo.UserImmigrationBO;
 import com.niti.dao.DaoException;
 import com.niti.dao.IUserImmigrationDAO;
-import com.niti.dao.entity.UserExperienceEntity;
 import com.niti.dao.entity.UserImmigrationEntity;
 import com.niti.service.IUserImmigrationService;
 import com.niti.service.exception.ServiceBusinessException;
