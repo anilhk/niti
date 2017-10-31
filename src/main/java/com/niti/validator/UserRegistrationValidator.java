@@ -1,4 +1,4 @@
-package com.niti.authentication.service.impl;
+package com.niti.validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

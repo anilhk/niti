@@ -36,6 +36,9 @@ public class UserEntity implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user", fetch=FetchType.LAZY)
 	private List<UserExperienceEntity> userExperiences;
 	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="user", fetch=FetchType.LAZY )
+	private List<UserImmigrationEntity> userImmigrations;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="USER_ID")

@@ -1,4 +1,4 @@
-package com.niti.authentication.service.impl;
+package com.niti.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

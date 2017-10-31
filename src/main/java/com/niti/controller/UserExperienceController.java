@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.niti.authentication.service.impl.UserExperienceValidator;
 import com.niti.bo.UserBO;
 import com.niti.bo.UserExperienceBO;
 import com.niti.service.IUserExperienceService;
 import com.niti.service.IUserService;
 import com.niti.service.exception.ServiceBusinessException;
+import com.niti.validator.UserExperienceValidator;
 
 @Controller
 public class UserExperienceController {

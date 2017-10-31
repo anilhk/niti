@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.niti.authentication.service.AuthenticationService;
-import com.niti.authentication.service.impl.UserRegistrationValidator;
 import com.niti.bo.UserBO;
 import com.niti.service.exception.ServiceBusinessException;
+import com.niti.validator.UserRegistrationValidator;
 
 @Controller
 public class RegistrationController {
