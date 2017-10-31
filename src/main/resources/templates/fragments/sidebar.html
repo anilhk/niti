@@ -12,12 +12,11 @@
 					<li>
 						<a href="#"><i class="fa fa-sitemap fa-fw"></i>Profile<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a href="#">Official</a></li>
-								<li><a href="#">Personal</a></li>
-								<li><a href="#">Contact</a></li>
-								<li><a th:href="@{/user/{userId}/experiences(userId=${user.userId})}">Experience</a></li>
-								<li><a th:href="@{/user/{userId}/skills(userId=${user.userId})}">Skills</a></li>
-								<li><a th:href="@{/user/{userId}/immigrations(userId=${user.userId})}">Visa and Immigration</a></li>
+								<li><a th:href="@{'/user/'+${userId}+'/official'}">Official</a></li>
+								<li><a th:href="@{/user/{userId}/personal(userId=${userId})}">Personal</a></li>
+								<li><a th:href="@{/user/{userId}/experiences(userId=${userId})}">Experience</a></li>
+								<li><a th:href="@{/user/{userId}/dependency(userId=${userId})}">Dependency</a></li>
+								<li><a th:href="@{/user/{userId}/immigrations(userId=${userId})}">Visa and Immigration</a></li>
 								
 							</ul>
 					</li>

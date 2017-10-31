@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.niti.bo.UserBO;
 import com.niti.bo.UserImmigrationBO;
 import com.niti.service.IUserImmigrationService;
-import com.niti.service.IUserService;
 import com.niti.service.exception.ServiceBusinessException;
 import com.niti.validator.UserImmigrationValidator;
 
@@ -30,8 +28,7 @@ public class UserImmigrationController {
 	@Autowired
 	private IUserImmigrationService userImmigrationServiceImpl;
 	
-	@Autowired
-	private IUserService userServiceImpl;
+	
 	
 	@InitBinder("userImmigrationBO")
 	public void initBinder(WebDataBinder webDataBinder) {
@@ -42,9 +39,8 @@ public class UserImmigrationController {
 	public String getUserImmigrations(@PathVariable("userId") Integer userId, Model model) throws ServiceBusinessException {
 			
 					List<UserImmigrationBO> userImmigrations = userImmigrationServiceImpl.getAllUserImmigrationsByUserId(userId);
-					UserBO userBO = userServiceImpl.findUserByUserId(userId);
 					model.addAttribute("userImmigrationsBOs", userImmigrations);
-					model.addAttribute("user", userBO);
+					model.addAttribute("userId", userId);
 					return "immigration";
 	}
 

@@ -20,7 +20,7 @@ import com.niti.service.IUserService;
 import com.niti.service.exception.ServiceBusinessException;
 import com.niti.service.exception.ServiceException;
 
-@Service
+@Service("userServiceImpl")
 @Transactional
 public class UserServiceImpl implements IUserService {
 

@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.niti.bo.UserBO;
 import com.niti.bo.UserExperienceBO;
 import com.niti.service.IUserExperienceService;
-import com.niti.service.IUserService;
 import com.niti.service.exception.ServiceBusinessException;
 import com.niti.validator.UserExperienceValidator;
 
@@ -30,20 +28,18 @@ public class UserExperienceController {
 	@Autowired
 	private IUserExperienceService userExperienceServiceImpl;
 	
-	@Autowired
-	private IUserService userServiceImpl;
-	
+		
 	@InitBinder("userExperienceBO")
 	public void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.addValidators(userExperienceValidator);
 	}
+	
 	@RequestMapping(value = "/user/{userId}/experiences", method = RequestMethod.GET)
 	public String getUserExperiences(@PathVariable("userId") Integer userId, Model model) throws ServiceBusinessException {
 			
 					List<UserExperienceBO> userExperienceBOs = userExperienceServiceImpl.getAllUserExperiencesByUserId(userId);
-					UserBO userBO = userServiceImpl.findUserByUserId(userId);
 					model.addAttribute("userExperienceBOs", userExperienceBOs);
-					model.addAttribute("user", userBO);
+					model.addAttribute("userId", userId);
 					return "experience";
 	}
 

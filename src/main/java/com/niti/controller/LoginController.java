@@ -34,6 +34,7 @@ public class LoginController {
 		
 		UserBO userBO = authenticationService.authenticateUser(user,result);
 		model.addAttribute("user",userBO);	
+		model.addAttribute("userId",userBO.getUserId());
 			if (result.hasErrors()) {
 				return "login";
 			}
