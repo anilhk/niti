@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,13 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.niti.constants.Ethnicity;
+import com.niti.constants.Gender;
+import com.niti.constants.MaritalStatus;
+import com.niti.entity.converter.EthnicityConverter;
+import com.niti.entity.converter.GenderConverter;
+import com.niti.entity.converter.MaritalStatusConverter;
 
 
 
@@ -32,6 +40,9 @@ public class UserEntity implements Serializable {
 	 * generated serial version uid
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="user", fetch=FetchType.LAZY)
+	private List<UserDependentEntity> UserDependents;
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="user", fetch=FetchType.LAZY)
 	private List<UserExperienceEntity> userExperiences;
@@ -89,6 +100,7 @@ public class UserEntity implements Serializable {
 	@Column(name="LAST_UPDATED_BY")
 	private String lastUpdatedBy;
 	
+	
 	@Column(name="CREATED_DATE", updatable=false, nullable=false)
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -110,7 +122,37 @@ public class UserEntity implements Serializable {
 	
 	@Column(name="CONFIRM_PASSWORD")
 	private String confirmPassword;
+
 	
+	@Column(name="GENDER")
+	@Convert(converter=GenderConverter.class)
+	private Gender gender;
+	
+	@Column(name="MARITAL_STATUS")
+	@Convert(converter=MaritalStatusConverter.class)
+	private MaritalStatus maritalStatus;
+	
+	@Column(name="ETHNIC_CODE")
+	@Convert(converter=EthnicityConverter.class)
+	private Ethnicity ethnicity;
+
+	@Column(name="NATIONALITY")
+	private String nationality;
+
+	@Column(name="DOB")
+	private Calendar dateOfBirth;
+
+	@Column(name="BLOOD_GROUP")
+	private String bloodGroup;
+
+	@Column(name="DRIVING_LICENSE")
+	private String drivingLicense;
+	
+	@Column(name="DRIVING_LICENSE_EXPIRY")
+	private Calendar drivingLicenseExpiry;
+	
+	
+		
 	
 	
 	
@@ -455,6 +497,118 @@ public class UserEntity implements Serializable {
 	 */
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public Gender getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	/**
+	 * @return the maritalStatus
+	 */
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	/**
+	 * @param maritalStatus the maritalStatus to set
+	 */
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
+	/**
+	 * @return the ethnicity
+	 */
+	public Ethnicity getEthnicity() {
+		return ethnicity;
+	}
+
+	/**
+	 * @param ethnicity the ethnicity to set
+	 */
+	public void setEthnicity(Ethnicity ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	/**
+	 * @return the nationality
+	 */
+	public String getNationality() {
+		return nationality;
+	}
+
+	/**
+	 * @param nationality the nationality to set
+	 */
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	/**
+	 * @return the dateOfBirth
+	 */
+	public Calendar getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	/**
+	 * @param dateOfBirth the dateOfBirth to set
+	 */
+	public void setDateOfBirth(Calendar dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	/**
+	 * @return the bloodGroup
+	 */
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	/**
+	 * @param bloodGroup the bloodGroup to set
+	 */
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	/**
+	 * @return the drivingLicense
+	 */
+	public String getDrivingLicense() {
+		return drivingLicense;
+	}
+
+	/**
+	 * @param drivingLicense the drivingLicense to set
+	 */
+	public void setDrivingLicense(String drivingLicense) {
+		this.drivingLicense = drivingLicense;
+	}
+
+	/**
+	 * @return the drivingLicenseExpiry
+	 */
+	public Calendar getDrivingLicenseExpiry() {
+		return drivingLicenseExpiry;
+	}
+
+	/**
+	 * @param drivingLicenseExpiry the drivingLicenseExpiry to set
+	 */
+	public void setDrivingLicenseExpiry(Calendar drivingLicenseExpiry) {
+		this.drivingLicenseExpiry = drivingLicenseExpiry;
 	}
 
 	

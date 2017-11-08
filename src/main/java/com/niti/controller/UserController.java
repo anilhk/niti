@@ -1,5 +1,7 @@
 package com.niti.controller;
 
+import java.util.EnumSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.niti.bo.UserBO;
+import com.niti.constants.Ethnicity;
+import com.niti.constants.Gender;
+import com.niti.constants.MaritalStatus;
 import com.niti.service.IUserService;
 import com.niti.service.exception.ServiceBusinessException;
 
@@ -23,6 +28,7 @@ public class UserController {
 					UserBO userBO = userServiceImpl.findUserByUserId(userId);
 					model.addAttribute("user", userBO);
 					model.addAttribute("userId", userId);
+					model.addAttribute("genders", EnumSet.allOf(Gender.class));
 					return "official";
 	}
 	
@@ -32,6 +38,10 @@ public class UserController {
 					UserBO userBO = userServiceImpl.findUserByUserId(userId);
 					model.addAttribute("user", userBO);
 					model.addAttribute("userId", userId);
+					model.addAttribute("genders", EnumSet.allOf(Gender.class));
+					model.addAttribute("maritalStatuses", EnumSet.allOf(MaritalStatus.class));
+					model.addAttribute("ethnicities", EnumSet.allOf(Ethnicity.class));
+					System.out.println(EnumSet.allOf(Ethnicity.class));
 					return "personal";
 	}
 }

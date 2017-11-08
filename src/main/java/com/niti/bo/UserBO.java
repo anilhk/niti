@@ -1,10 +1,15 @@
 package com.niti.bo;
 
 import java.util.Calendar;
+import java.util.EnumSet;
 import java.util.List;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.niti.constants.Ethnicity;
+import com.niti.constants.Gender;
+import com.niti.constants.MaritalStatus;
 
 public class UserBO {
 
@@ -17,6 +22,7 @@ public class UserBO {
 		if (lastUpdatedBy == null || lastUpdatedBy.length() == 0) {
 				lastUpdatedBy = "System";
 			}
+		
 		}
 	
 
@@ -52,6 +58,9 @@ public class UserBO {
 	@JsonBackReference
 	private List<UserImmigrationBO> userImmigrations;
 	
+	@JsonBackReference
+	private List<UserDependentBO> userDependents;
+	
 	private String userNumber;
 
 	private String createdBy;
@@ -72,6 +81,23 @@ public class UserBO {
 	
 	private String confirmPassword;
 
+	private Gender gender;
+	
+	private MaritalStatus maritalStatus;
+	
+	private Ethnicity ethnicity;
+
+	private String nationality;
+
+	private Calendar dateOfBirth;
+
+	private String bloodGroup;
+
+	private String drivingLicense;
+	
+	private Calendar drivingLicenseExpiry;
+	
+	
 	
 	/**
 	 * @return the userId
@@ -408,6 +434,72 @@ public class UserBO {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public MaritalStatus getMaritalStatus() {
+		return maritalStatus;
+	}
+
+	public void setMaritalStatus(MaritalStatus maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
+
+	public Ethnicity getEthnicity() {
+		return ethnicity;
+	}
+
+	public void setEthnicity(Ethnicity ethnicity) {
+		this.ethnicity = ethnicity;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public Calendar getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Calendar dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getDrivingLicense() {
+		return drivingLicense;
+	}
+
+	public void setDrivingLicense(String drivingLicense) {
+		this.drivingLicense = drivingLicense;
+	}
+
+	public Calendar getDrivingLicenseExpiry() {
+		return drivingLicenseExpiry;
+	}
+
+	public void setDrivingLicenseExpiry(Calendar drivingLicenseExpiry) {
+		this.drivingLicenseExpiry = drivingLicenseExpiry;
+	}
+
+	
 	
 	
 }
