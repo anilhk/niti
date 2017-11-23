@@ -84,8 +84,24 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void updateUser(UserBO userBO) throws ServiceBusinessException {
 
+		UserEntity userDBEntity = null;
 		try {
-			userDAOImpl.updateUser(convertToEntity(userBO));
+			 userDBEntity = userDAOImpl.findUserByUserId(userBO.getUserId());
+			if (userDBEntity == null) {
+				throw new ServiceBusinessException("User with Userid " + userBO.getUserId() +" does not  exists in system", ServiceException.ErrorCode.DATA_NOT_FOUND_EXCEPTION);
+			}
+			userDBEntity.setFirstName(userBO.getFirstName());
+			userDBEntity.setLastName(userBO.getLastName());
+			userDBEntity.setMiddleName(userBO.getMiddleName());
+			userDBEntity.setPrimaryContactNumber(userBO.getPrimaryContactNumber());
+			userDBEntity.setSecondaryContactNumber(userBO.getSecondaryContactNumber());
+			userDBEntity.setEmailAddress(userBO.getEmailAddress());
+			userDBEntity.setStatus(userBO.getStatus());
+			userDBEntity.setSalary(userBO.getSalary());
+			userDBEntity.setStartDate(userBO.getStartDate());
+			userDBEntity.setEndDate(userBO.getEndDate());
+			userDAOImpl.updateUser(userDBEntity);
+			
 		} catch (DaoException e) {
 			logger.error("Database exception ", e);
 			throw new ServiceBusinessException("Technical Error", ServiceException.ErrorCode.TECHNICAL_ERROR);
@@ -137,6 +153,60 @@ public class UserServiceImpl implements IUserService {
 
 	private UserBO convertToBO(UserEntity userEntity) {
 		return entityToBOMapper.map(userEntity, UserBO.class);
+	}
+
+	@Override
+	public void updateUserOfficialInformation(UserBO userBO) throws ServiceBusinessException {
+
+		UserEntity userDBEntity = null;
+		try {
+			 userDBEntity = userDAOImpl.findUserByUserId(userBO.getUserId());
+			if (userDBEntity == null) {
+				throw new ServiceBusinessException("User with Userid " + userBO.getUserId() +" does not  exists in system", ServiceException.ErrorCode.DATA_NOT_FOUND_EXCEPTION);
+			}
+			userDBEntity.setFirstName(userBO.getFirstName());
+			userDBEntity.setLastName(userBO.getLastName());
+			userDBEntity.setMiddleName(userBO.getMiddleName());
+			userDBEntity.setPrimaryContactNumber(userBO.getPrimaryContactNumber());
+			userDBEntity.setSecondaryContactNumber(userBO.getSecondaryContactNumber());
+			userDBEntity.setEmailAddress(userBO.getEmailAddress());
+			userDBEntity.setStatus(userBO.getStatus());
+			userDBEntity.setSalary(userBO.getSalary());
+			userDBEntity.setStartDate(userBO.getStartDate());
+			userDBEntity.setEndDate(userBO.getEndDate());
+			userDAOImpl.updateUser(userDBEntity);
+			
+		} catch (DaoException e) {
+			logger.error("Database exception ", e);
+			throw new ServiceBusinessException("Technical Error", ServiceException.ErrorCode.TECHNICAL_ERROR);
+		}
+	}
+
+	@Override
+	public void updateUserProfileInformation(UserBO userBO) throws ServiceBusinessException {
+		
+		UserEntity userDBEntity = null;
+		try {
+			 userDBEntity = userDAOImpl.findUserByUserId(userBO.getUserId());
+			if (userDBEntity == null) {
+				throw new ServiceBusinessException("User with Userid " + userBO.getUserId() +" does not  exists in system", ServiceException.ErrorCode.DATA_NOT_FOUND_EXCEPTION);
+			}
+			userDBEntity.setDrivingLicense(userBO.getDrivingLicense());
+			userDBEntity.setDrivingLicenseExpiry(userBO.getDrivingLicenseExpiry());
+			userDBEntity.setDateOfBirth(userBO.getDateOfBirth());
+			userDBEntity.setBloodGroup(userBO.getBloodGroup());
+			userDBEntity.setMaritalStatus(userBO.getMaritalStatus());
+			userDBEntity.setEthnicity(userBO.getEthnicity());
+			userDBEntity.setGender(userBO.getGender());
+			userDBEntity.setSalary(userBO.getSalary());
+			userDBEntity.setStartDate(userBO.getStartDate());
+			userDBEntity.setEndDate(userBO.getEndDate());
+			userDAOImpl.updateUser(userDBEntity);
+			
+		} catch (DaoException e) {
+			logger.error("Database exception ", e);
+			throw new ServiceBusinessException("Technical Error", ServiceException.ErrorCode.TECHNICAL_ERROR);
+		}
 	}
 
 }

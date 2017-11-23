@@ -77,7 +77,7 @@ public class UserEntity implements Serializable {
 	private String primaryContactNumber;
 	
 	@Column(name="S_CONTACT_NBR")
-	private String secondarayContactNumber;
+	private String secondaryContactNumber;
 	
 	@Column(name="EMP_CODE")
 	private String employeeCode;
@@ -271,15 +271,15 @@ public class UserEntity implements Serializable {
 	/**
 	 * @return the secondarayContactNumber
 	 */
-	public String getSecondarayContactNumber() {
-		return secondarayContactNumber;
+	public String getSecondaryContactNumber() {
+		return secondaryContactNumber;
 	}
 
 	/**
-	 * @param secondarayContactNumber the secondarayContactNumber to set
+	 * @param SecondaryContactNumber the SecondaryContactNumber to set
 	 */
-	public void setSecondarayContactNumber(String secondarayContactNumber) {
-		this.secondarayContactNumber = secondarayContactNumber;
+	public void setSecondaryContactNumber(String secondaryContactNumber) {
+		this.secondaryContactNumber = secondaryContactNumber;
 	}
 
 	/**
@@ -382,7 +382,7 @@ public class UserEntity implements Serializable {
 		return "UserEntity [userExperiences=" + userExperiences + ", userId=" + userId + ", prefix=" + prefix
 				+ ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", userNumber="
 				+ userNumber + ", emailAddress=" + emailAddress + ", primaryContactNumber=" + primaryContactNumber
-				+ ", secondarayContactNumber=" + secondarayContactNumber + ", employeeCode=" + employeeCode
+				+ ", secondarayContactNumber=" + secondaryContactNumber + ", employeeCode=" + employeeCode
 				+ ", salary=" + salary + ", status=" + status + ", startDate=" + startDate + ", endDate=" + endDate
 				+ "]";
 	}

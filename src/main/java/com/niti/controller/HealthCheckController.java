@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class HealthCheckController {
 
+	
 	@RequestMapping(value="/" , method=RequestMethod.GET)
 	public String welcome() {
 		return "welcome";

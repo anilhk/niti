@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:ddl:bundle-includes="bootstrap3" lang="en">
+
+<head th:replace="fragments/header :: header"></head>
+
+<body>
+
+	<div th:include="fragments/navBar :: navBar"></div>
+
+	<div th:include="fragments/sidebar :: sidebar"></div>
+
+	<div id="page-wrapper">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4>
+							<b>Official</b>
+						</h4>
+					</div>
+						<div class="panel-body">
+
+						<div th:if="${user != null}">
+								<div class="form-group">
+									<label class="control-label col-xs-1">Gender</label>
+									<div class="col-xs-2">
+									<div th:if="user.gender !=null">
+											<select id="gender" name="gender">
+											<option>Gender</option>
+											<option th:each="gen : ${genders}"
+												th:value="${gen}"
+												th:text="${gen}"
+												th:selected="${gen.equals(user.gender.name)}">
+											</option>
+										</select>
+									</div>
+									<div th:if="user.gender == null">
+										<select id="gender" name="gender">
+											<option>Gender</option>
+											<option th:each="gen : ${genders}"
+												th:value="${gen}"
+												th:text="${gen}">
+											</option>		
+								
+								</div>	
+								</div>
+			
+									<label class="control-label col-xs-2">Marital Status</label>
+									<div class="col-xs-2">
+											<select id="maritalStatus" name="maritalStatus">
+											<option th:each="status : ${maritalStatuses}"
+												th:value="${status}"
+												th:text="${status}"
+												th:selected="${user.maritalStatus == null} ? 'Please select a Value' : ${status.equals(user.maritalStatus.name)}">
+											</option>
+										</select>
+									</div>
+				
+									<label class="control-label col-xs-2">Nationality</label>
+									<div class="col-xs-2">
+										<select class="form-control">
+											<option></option>
+											<option>India</option>
+											<option>Non INdia</option>
+										</select>
+									</div>
+								</div>
+									
+								<br /><br />	
+								
+								 <div class="form-group">
+									 <label class="control-label col-xs-1">Ethnicity</label>
+									<div class="col-xs-2">
+										<select id="ethnicity" name="ethnicity">
+											<option th:each="ethnic : ${ethnicities}"
+												th:value="${ethnic}"
+												th:text="${ethnic}"
+												th:selected="${user.ethnicity != null ? ethnic.equals(user.ethnicity.name) : 'Please select a Value'}">
+											</option>
+										</select>
+									</div> 
+									
+									<label class="control-label col-xs-2" for="lastName">Birth date</label>
+										<div class="col-xs-2">
+											<input type="text" class="form-control" id="lastName" placeholder="Last Name" />
+										</div>
+									
+									<label class="control-label col-xs-2" for="lastName">Blood Group</label>
+										<div class="col-xs-2">
+											<input type="text" class="form-control" id="lastName" placeholder="Blood Group" />
+										</div>	
+									
+								</div>	
+										
+								<br />
+								<br />		
+										
+								<div class="form-group">
+									
+									
+								<label class="control-label col-xs-1" for="lastName">Driving License</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" id="lastName" placeholder="Driving License" />
+								</div>
+									
+								<label class="control-label col-xs-2" for="lastName">Driving License Expiry</label>
+								<div class="col-xs-2">
+									<input type="text" class="form-control" id="lastName" placeholder="Expiry" />
+								</div>	
+									
+								</div>																
+								
+								
+							<br/>
+								<div class="form-group">
+									<div class="col-xs-offset-3 col-xs-9">
+										<input type="submit" class="btn btn-primary" value="Submit"></input>
+										<input type="reset" class="btn btn-default" value="Reset"></input>
+									</div>
+								</div>
+						</div>
+						<!-- /.panel-body -->
+						</div>
+				<!-- /.panel panel-default -->
+				</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+</div>	
+	<!-- /.page-wrapper -->
+</body>
+</html>

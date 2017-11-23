@@ -33,8 +33,11 @@ public class LoginController {
 	public String processLoginInfo(@ModelAttribute("user") @Validated UserBO user, BindingResult result, Model model) throws ServiceBusinessException {
 		
 		UserBO userBO = authenticationService.authenticateUser(user,result);
-		model.addAttribute("user",userBO);	
-		model.addAttribute("userId",userBO.getUserId());
+		
+		if (userBO != null) {
+				model.addAttribute("user",userBO);	
+				model.addAttribute("userId",userBO.getUserId());
+		}		
 			if (result.hasErrors()) {
 				return "login";
 			}

@@ -16,98 +16,115 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4>
-							<b>Official</b>
+							<b>Personal</b>
 						</h4>
 					</div>
 						<div class="panel-body">
-
-						<div th:if="${user != null}">
-								<div class="form-group">
-									<label class="control-label col-xs-1">Gender</label>
-									<div class="col-xs-2">
-										<select id="gender" name="gender">
-											<option th:each="gen : ${genders}"
-												th:value="${gen}"
-												th:text="${gen}"
-												th:selected="${gen.equals(user.gender.name)}">
-											</option>
-										</select>
-									</div>
-			
-									<label class="control-label col-xs-2">Marital Status</label>
-									<div class="col-xs-2">
-											<select id="maritalStatus" name="maritalStatus">
-											<option th:each="status : ${maritalStatuses}"
-												th:value="${status}"
-												th:text="${status}"
-												th:selected="${user.maritalStatus == null} ? 'Please select a Value' : ${status.equals(user.maritalStatus.name)}">
-											</option>
-										</select>
-									</div>
-				
-									<label class="control-label col-xs-2">Nationality</label>
-									<div class="col-xs-2">
-										<select class="form-control">
-											<option></option>
-											<option>India</option>
-											<option>Non INdia</option>
-										</select>
-									</div>
-								</div>
-									
-								<br /><br />	
+						
+							<form role="form" th:action="@{/user/{userId}/personal(userId=${userId})}" th:object="${user}" method="post">
 								
-								 <div class="form-group">
-									 <label class="control-label col-xs-1">Ethnicity</label>
-									<div class="col-xs-2">
-										<select id="ethnicity" name="ethnicity">
-											<option th:each="ethnic : ${ethnicities}"
-												th:value="${ethnic}"
-												th:text="${ethnic}"
-												th:selected="${user.ethnicity != null ? ethnic.equals(user.ethnicity.name) : 'Please select a Value'}">
-											</option>
-										</select>
-									</div> 
-									
-									<label class="control-label col-xs-2" for="lastName">Birth date</label>
+								<!--  first form group  -->
+								<div class="form-group">
+								
+										<label class="control-label col-xs-2">Drivers License</label>
 										<div class="col-xs-2">
-											<input type="text" class="form-control" id="lastName" placeholder="Last Name" />
+											<input type="text" class="form-control" th:field="*{drivingLicense}" placeholder="Driving License" />
 										</div>
-									
-									<label class="control-label col-xs-2" for="lastName">Blood Group</label>
+								
 										<div class="col-xs-2">
-											<input type="text" class="form-control" id="lastName" placeholder="Blood Group" />
-										</div>	
-									
-								</div>	
-										
-								<br />
-								<br />		
-										
-								<div class="form-group">
-									
-									
-								<label class="control-label col-xs-1" for="lastName">Driving License</label>
-								<div class="col-xs-2">
-									<input type="text" class="form-control" id="lastName" placeholder="Driving License" />
+										</div>
+								
+										<label class="col-xs-2">License Expiry</label>
+										<div class="col-xs-2">
+										<input type="text" class="form-control" th:field="*{drivingLicenseExpiry}" placeholder="Expiry" />
+										</div> 
+															
+								<!--  first form group end  -->
 								</div>
-									
-								<label class="control-label col-xs-2" for="lastName">Driving License Expiry</label>
-								<div class="col-xs-2">
-									<input type="text" class="form-control" id="lastName" placeholder="Expiry" />
-								</div>	
-									
-								</div>																
-								
-								
+							
+							<br/><br/>
 							<br/>
+								<!--  second form group  -->
 								<div class="form-group">
-									<div class="col-xs-offset-3 col-xs-9">
-										<input type="submit" class="btn btn-primary" value="Submit"></input>
-										<input type="reset" class="btn btn-default" value="Reset"></input>
-									</div>
+							
+							
+									<label class="col-xs-2">Date of Birth</label>
+										<div class="col-xs-2">
+											<input type="text" class="form-control" th:field="*{dateOfBirth}" placeholder="Date of Birth" />
+									</div>	
+							
+									<div class="col-xs-2">
+										</div> 
+										
+									<label class="col-xs-2">Blood Group</label>
+										<div class="col-xs-2">
+											<input type="text" class="form-control" th:field="*{bloodGroup}" placeholder="Blood Group" />
+										</div>
+							
+							
+															
+								<!--  second form group end  -->
 								</div>
-						</div>
+							
+								<br/><br/>
+							<br/>
+							
+							<!--  third form group  -->
+								<div class="form-group">
+							
+									<label class="col-xs-2">Marital Status</label>
+										<div class="col-xs-2">
+											 <select id="maritalStatus" class="form-control required" th:field="*{maritalStatus}" >
+          									    <option value=""></option>
+            								    <option th:each="status : ${maritalStatuses}" th:value="${status}" th:text="${status}"></option>
+        									  </select>
+										</div>	
+							
+										<div class="col-xs-2">
+										</div> 
+							
+									<label class="col-xs-1">Gender</label>
+										<div class="col-xs-2">
+        									<select id="gender" class="form-control" th:field="*{gender}">
+            									<option value=""></option>
+            									<option th:each="e : ${genders}" th:value="${e}" th:text="${e}"></option>
+       										</select>
+										</div>
+								
+															
+								<!--  third form group end  -->
+								</div>
+							
+							<br/><br/><br />
+							
+								<!--  fourth form group  -->
+								<div class="form-group">
+							
+														
+									<label class="col-xs-2">Ethnicity</label>
+										<div class="col-xs-4">
+        									<select id="ethnicity" class="form-control" th:field="*{ethnicity}" th:placeholder="Ethnicity">
+            									<option value=""></option>
+            									<option th:each="e : ${ethnicities}" th:value="${e}" th:text="${e}"></option>
+       										</select>
+										</div>
+							
+															
+								<!--  fourth form group end  -->
+								</div>
+								
+								<br/><br />
+								<br />
+								
+								<!--  third form group  -->
+								<div class="form-group">
+										<div class="col-xs-2">
+											<input type="submit" value="Update" class="btn btn-primary" />
+										</div>
+								</div>
+							</form>
+							
+					
 						<!-- /.panel-body -->
 						</div>
 				<!-- /.panel panel-default -->

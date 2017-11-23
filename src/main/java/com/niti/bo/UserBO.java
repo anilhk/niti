@@ -1,9 +1,9 @@
 package com.niti.bo;
 
 import java.util.Calendar;
-import java.util.EnumSet;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,6 +32,7 @@ public class UserBO {
 	
 	private String employeeCode;
 	
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Calendar endDate;
 	
 	private String firstName;
@@ -48,6 +49,7 @@ public class UserBO {
 	
 	private String secondaryContactNumber;
 	
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Calendar startDate;
 	
 	private String status;
@@ -89,12 +91,14 @@ public class UserBO {
 
 	private String nationality;
 
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Calendar dateOfBirth;
 
 	private String bloodGroup;
 
 	private String drivingLicense;
 	
+	@DateTimeFormat(pattern = "MM/dd/yyyy")
 	private Calendar drivingLicenseExpiry;
 	
 	

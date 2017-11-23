@@ -13,6 +13,11 @@ public interface IUserService {
 	
 	public void updateUser(UserBO userBO) throws ServiceBusinessException;
 	
+	public void updateUserOfficialInformation(UserBO userBO) throws ServiceBusinessException;
+	
+	public void updateUserProfileInformation(UserBO userBO) throws ServiceBusinessException;
+	
+	
 	public void deleteUser(Integer userId) throws ServiceBusinessException;
 	
 	public List<UserBO> getAllUsers() throws ServiceBusinessException;

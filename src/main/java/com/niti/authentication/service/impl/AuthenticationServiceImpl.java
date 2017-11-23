@@ -56,13 +56,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 		
 		UserEntity userEntity;
-		UserBO user;
+		UserBO user = null;
 		try {
 
 			userEntity = userDAOImpl.getUserByEmailAddress(userBO.getEmailAddress());
 			if (userEntity == null) {
 				logger.error("Cannot login user, Invalid user id or password ");
 				result.reject("global","Invalid user id or Password");
+				return user;
 			}
 
 			user = convertToBO(userEntity);
@@ -70,6 +71,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 				logger.error("Cannot login user, Invalid user id or password ");
 				result.reject("global", "Invalid user id or passwords");
+				return user;
 
 			}
 

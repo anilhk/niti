@@ -108,6 +108,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+    		<groupId>org.thymeleaf.extras</groupId>
+    		<artifactId>thymeleaf-extras-java8time</artifactId>
+		</dependency>
 
 		<!-- Webjars (static dependencies distributed as JAR files) -->
 		<dependency>

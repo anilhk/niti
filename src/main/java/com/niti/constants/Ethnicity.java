@@ -36,7 +36,24 @@ public enum Ethnicity {
 	}
 	
 	public String toString() {
-		return name.toString();
+		if (name.equals("2")) {
+			return Constants.AFRICAN_AMERICAN;
+		}
+		else if (name.equals("1")) {
+			return Constants.ASIAN;
+		}
+		else if (name.equals("3")) {
+			return Constants.HISPANIC;
+		}
+		else if (name.equals("0")) {
+			return Constants.NATIVE_AMERICAN;
+		}
+		else if (name.equals("4")) {
+			return Constants.WHITE;
+		}
+		else {
+			return null;
+		}
 	}
 	
 }
